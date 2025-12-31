@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Library - Gated Access</title>
+    
+    <style>
+        /* 1. GLOBAL & FONT IMPORT */
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Open+Sans:wght@400;600&display=swap');
+
+        /* GLOBAL STYLES */
+        body {
+            background-color: #f7f9fc; 
+            font-family: 'Open Sans', sans-serif; 
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* 2. VIDEO & OVERLAY */
+        #video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1; 
+            filter: grayscale(80%) brightness(50%) blur(2px); 
+            transform: scale(1.1);
+        }
+        
+        .content-wrap {
+            position: relative;
+            z-index: 1; 
+        }
+
+        /* 3. HEADER SECTION */
+        .page-header {
+            background-image: linear-gradient(135deg, #1f4068 0%, #162447 100%);
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); 
+            color: #FFFFFF;
+            padding: 40px 0 20px 0;
+            position: relative; 
+            z-index: 10;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 5px 0;
+            font-family: 'Merriweather', serif; 
+            font-size: 3.5em;
+            text-shadow: 1px 1px 10px #fdfdff, 0 0 20px #FFD700; 
+        }
+        
+        .page-header p {
+            color: #ddd;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* 4. MAIN CONTENT CONTAINER & COLUMNS */
+        .main-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 60px auto; 
+            display: flex; 
+            gap: 30px; 
+            align-items: stretch;
+            position: relative;
+            z-index: 10;
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column; 
+            }
+        }
+
+        /* LEFT COLUMN (Information - Card) */
+        .info-column {
+            flex: 3; 
+            padding: 40px; 
+            background-color: #FFFFFF;
+            border-radius: 18px; 
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15), 0 0 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+        
+        .info-column:hover {
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); 
+        }
+
+        .info-column h2 {
+            color: #e67e22; 
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #FFD700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-family: 'Merriweather', serif;
+        }
+        
+        .info-column p strong {
+            color: #27ae60; 
+            font-weight: 600;
+            background-color: #e8f8f5;
+            padding: 3px 8px;
+            border-radius: 5px;
+        }
+
+        .info-image-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .info-image-container img {
+            width: 90%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 15px;
+            border: 4px solid #f7f9fc; 
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+        
+        .info-image-container img:hover {
+            transform: scale(1.05) rotate(-1deg); 
+            box-shadow: 0 0 25px 8px rgba(52, 152, 219, 0.8);
+        }
+
+        /* RIGHT COLUMN (Navigation - Side Panel) */
+        .nav-column {
+            flex: 1; 
+            padding: 30px;
+            background-color: #eceff4; 
+            text-align: center; 
+            border-radius: 18px; 
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid #D1C4E9;
+        }
+
+        .nav-column h2 {
+            color: #5d4037; 
+            margin-top: 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #5d4037;
+            padding-bottom: 10px;
+            font-family: 'Merriweather', serif;
+        }
+
+        /* 5. NAVIGATION BUTTONS */
+        .nav-links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; 
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .nav-button-link {
+            text-decoration: none;
+            display: block;
+            border-radius: 10px; 
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); 
+            overflow: hidden;
+            position: relative;
+            cursor: pointer; /* Ensure links look clickable, even when disabled */
+        }
+        
+        /* GATED CONTENT STYLES: Default state (Disabled) */
+        .gated-content.disabled a,
+        .gated-content.disabled button:not(#loginBtn) {
+            opacity: 0.4;
+            pointer-events: none; /* Prevents clicks on the links */
+            filter: grayscale(100%);
+            box-shadow: none;
+        }
+
+        /* Only allow hover effects on enabled links */
+        .gated-content:not(.disabled) .nav-button-link:hover {
+            transform: scale(1.03) translateY(-2px); 
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Specific Gradient Backgrounds */
+        .blue-light { background-image: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%); }
+        .green { background-image: linear-gradient(45deg, #a8ff78 0%, #78ffd6 100%); }
+        .orange { background-image: linear-gradient(45deg, #f39f12 0%, #ff5e3a 100%); }
+        .purple { background-image: linear-gradient(45deg, #aa076b 0%, #61045f 100%); }
+        .red { background-image: linear-gradient(45deg, #f43b47 0%, #ff6671 100%); border: none;}
+
+        .nav-button-link::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.5s ease-in-out;
+            transform: skewX(-20deg);
+        }
+
+        .nav-button-link:hover::after {
+            left: 100%;
+        }
+
+        .nav-button-content {
+            color: white;
+            padding: 18px; 
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+
+        .nav-icon-container {
+            margin-top: 50px;
+        }
+
+        .nav-icon-container img {
+            width: 60%; 
+            max-width: 150px;
+            opacity: 1;
+            transition: transform 0.5s, filter 0.5s;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+        }
+        
+        .nav-icon-container img:hover {
+            transform: rotate(-5deg) scale(1.1); 
+            filter: drop-shadow(0 10px 20px rgba(171, 145, 222, 0.8));
+        }
+
+        /* 6. FOOTER */
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #e5e9ee; 
+            position: relative;
+            z-index: 10;
+            margin-top: 40px;
+        }
+
+        .copyright {
+            font-size: 0.9em;
+            color: #777777;
+            margin: 0;
+            font-style: italic;
+        }
+
+        /* 7. LOGIN MODAL STYLES */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 20; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7); 
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px 30px;
+            border: 1px solid #888;
+            width: 80%; 
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            animation-name: animatetop;
+            animation-duration: 0.4s
+        }
+        
+        @keyframes animatetop {
+            from {top:-300px; opacity:0} 
+            to {top:0; opacity:1}
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #BDC3C7;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        
+        .login-form button {
+            background-color: #3498DB; 
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .login-form button:hover {
+            background-color: #2980B9;
+        }
+        
+        #login-message {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+    </head>
+<body onload="setInitialState()">
+    <video autoplay muted loop id="video-background">
+        <source src="library-bg-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="content-wrap">
+        <header class="page-header">
+            <h1>📚 Welcome to My Digital Library</h1>
+            <p>Please log in to explore our premium collection</p>
+        </header>
+
+        <main class="main-container">
+            <section class="info-column">
+                <h2>Discover Knowledge Anytime, Anywhere</h2>
+                <p>
+                    Welcome! Our digital library provides exclusive access to thousands of titles. Please *log in using the button on the right* to view the full list of books, genres, and authors.
+                </p>
+                <p>
+                    Access to our core resources is *gated* for registered members only.
+                </p>
+                
+                <div class="info-image-container">
+                    <img src="home_library_icon.jpg" alt="Digital Library Icon">
+                </div>
+
+            </section>
+
+            <section class="nav-column">
+                <h2 id="navigationTitle">Quick Navigation (Access Locked)</h2>
+                
+                <div id="gatedContent" class="gated-content disabled"> 
+                    <ul class="nav-links-list">
+                        <li>
+                            <a href="#" class="nav-button-link blue-light">
+                                <div class="nav-button-content">ℹ About Library</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-button-link green">
+                                <div class="nav-button-content">📖 Books List</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-button-link orange">
+                                <div class="nav-button-content">🏷 Genres</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-button-link purple">
+                                <div class="nav-button-content">✍ Authors</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-button-link red">
+                                <div class="nav-button-content">📞Contact Us</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="nav-links-list" style="margin-top: 20px;">
+                    <li>
+                        <button id="loginBtn" class="nav-button-link red" onclick="toggleLoginState()" style="border: none;">
+                            <div class="nav-button-content">🔒 User Login</div>
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="nav-icon-container">
+                    <img src="open_book_icon.jpg" alt="Open book icon">
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p class="copyright">Library version 1.0. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeLoginModal()">&times;</span>
+            <h2>Member Login</h2>
+            <form id="loginForm" class="login-form" onsubmit="return handleLogin(event)">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter Username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter Password" required>
+
+                <button type="submit">Log In</button>
+                <p id="login-message"></p>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        let isLoggedIn = false;
+        
+        /**
+         * Sets the initial state of the UI when the page loads.
+         */
+       function setInitialState() {
+    const savedLogin = localStorage.getItem("isLoggedIn");
+
+    if (savedLogin === "true") {
+        updateGatedContent(true);   // already logged in
+    } else {
+        updateGatedContent(false);  // not logged in
+    }
+}
+
+
+        /**
+         * Updates the visibility and functionality of the navigation links.
+         * @param {boolean} loggedIn - The current login status.
+         */
+        function updateGatedContent(loggedIn) {
+            const gatedContent = document.getElementById('gatedContent');
+            const loginBtn = document.getElementById('loginBtn');
+            const navTitle = document.getElementById('navigationTitle');
+            isLoggedIn = loggedIn;
+
+            if (loggedIn) {
+                gatedContent.classList.remove('disabled');
+                loginBtn.innerHTML = '<div class="nav-button-content">🔓 User Logout</div>';
+                navTitle.textContent = 'Quick Navigation (Access Granted)';
+                // Set real hrefs (optional, but good practice if links were meaningful)
+                const about = document.querySelector('.blue-light');
+                
+about.href = 'about css j.html';
+about.target = '_blank';
+
+const books = document.querySelector('.green');
+books.href = 'books css j.html';
+books.target = '_blank';
+
+const genres = document.querySelector('.orange');
+genres.href = 'genres css j.html';
+genres.target = '_blank';
+
+const authors = document.querySelector('.purple');
+authors.href = 'authors css j.html';
+authors.target = '_blank';
+
+const contact = document.querySelector('.red');
+contact.href = 'contact css j.html';
+contact.target = '_blank';
+
+            } else {
+                gatedContent.classList.add('disabled');
+                loginBtn.innerHTML = '<div class="nav-button-content">🔒 User Login</div>';
+                navTitle.textContent = 'Quick Navigation (Access Locked)';
+                // Prevent navigation on disabled links
+                document.querySelectorAll('.gated-content a').forEach(a => a.href = '#');
+            }
+        }
+        
+        /**
+         * Handles the click on the Login/Logout button.
+         */
+        function toggleLoginState() {
+           if (isLoggedIn) {
+    localStorage.removeItem("isLoggedIn"); // ⭐ ADD THIS LINE
+    updateGatedContent(false);
+    alert('You have been logged out.');
+}
+ else {
+                // If logged out, show login modal
+                openLoginModal();
+            }
+        }
+        
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+            document.getElementById('username').focus(); 
+        }
+        
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('login-message').textContent = ''; 
+            document.getElementById('loginForm').reset(); 
+        }
+
+        
+        function handleLogin(event) {
+            event.preventDefault(); 
+            
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const loginMessage = document.getElementById('login-message');
+            
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value.trim();
+            
+            const VALID_USERNAME = "fyvit";
+            const VALID_PASSWORD = "vit@1983";
+            
+            loginMessage.textContent = ''; 
+            loginMessage.style.color = '#E74C3C'; 
+
+            if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+                // Successful Login
+                loginMessage.style.color = '#2ECC71';
+                loginMessage.textContent = '✅ Login Successful! Access Granted.';
+                
+                localStorage.setItem("isLoggedIn", "true");
+
+                setTimeout(() => {
+                    closeLoginModal();
+                    updateGatedContent(true); // ENABLE LINKS
+                }, 1000);
+
+            } else {
+                // Failed Login
+                loginMessage.textContent = '❌ Invalid credentials. Try again.';
+                passwordInput.value = '';
+            }
+            
+            return false;
+        }
+        
+        // Close modal when user clicks anywhere outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('loginModal');
+            if (event.target == modal) {
+                closeLoginModal();
+            }
+        }
+    </script>
+    </body>
+</html>

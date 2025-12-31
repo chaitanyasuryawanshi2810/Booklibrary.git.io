@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Our Library</title>
+    
+    
+    <style>
+        /* GLOBAL STYLES */
+        body {
+            /* Light, inviting background */
+            background-color: #F8F9F9; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* CENTERED CONTAINER FOR STRUCTURE (Replaces tables for layout) */
+        .container {
+            width: 85%;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0;
+        }
+
+        /* HEADERS */
+        h1 {
+            color: #2C3E50; /* Deep blue title */
+            text-align: center;
+            padding: 20px 0 10px;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            color: #E74C3C; /* Vibrant Red for section headers */
+            text-align: center;
+            margin: 30px 0 15px;
+            padding-bottom: 5px;
+            border-bottom: 3px solid #F39C12; /* Orange underline */
+            display: inline-block;
+            font-size: 1.8em;
+            text-transform: uppercase;
+        }
+        
+        h3 {
+            color: #27AE60; /* Emerald Green for mission/vision sub-headers */
+            margin-top: 0;
+            border-bottom: 2px solid #5DADE2;
+            padding-bottom: 5px;
+        }
+
+        /* INTRO TEXT AND HIGHLIGHTS */
+        .intro-section {
+            text-align: center;
+            padding: 15px 0 25px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #D5DBDB;
+            font-size: 1.1em;
+        }
+        
+        .intro-section b {
+            color: #1B4F9C; /* Primary blue for key bold text */
+        }
+        
+        .intro-section b strong {
+            /* Highlighted text styling */
+            background-color: #FFF3CD; /* Light yellow background */
+            padding: 3px 6px;
+            border-radius: 5px;
+        }
+
+        /* 3. IMAGES and Hover Effects */
+        .header-image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .header-image-container img {
+            width: 80%;
+            max-width: 900px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s ease-in-out, box-shadow 0.5s ease;
+        }
+        
+        /* Image Hover Effect */
+        .header-image-container img:hover {
+            transform: scale(1.02); 
+            box-shadow: 0 0 25px 8px rgba(44, 62, 80, 0.6); /* Dark blue glow on hover */
+        }
+
+        /* MISSION & VISION SECTION (Flexbox replaces table) */
+        .mission-vision-grid {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 600px) {
+            .mission-vision-grid {
+                flex-direction: column;
+            }
+        }
+
+        .mission-vision-box {
+            flex: 1;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Specific colorful backgrounds */
+        .mission-box {
+            background-color: #D3E0F3; /* Light Blue */
+            border-left: 5px solid #1B4F9C;
+        }
+        
+        .vision-box {
+            background-color: #E0F3D3; /* Light Green */
+            border-left: 5px solid #27AE60;
+        }
+        
+        .mission-vision-box p strong {
+            color: #E74C3C; /* Red highlight */
+            font-weight: bold;
+        }
+
+        /* OFFER LIST */
+        .offer-list {
+            list-style-type: none; /* Remove default bullet */
+            padding-left: 0;
+            margin: 20px auto;
+            width: 80%;
+        }
+        
+        .offer-list li {
+            background-color: #FFFFFF; /* White background for list items */
+            padding: 12px 20px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #F39C12; /* Orange accent bar */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s;
+        }
+        
+        .offer-list li:hover {
+            background-color: #FEF9E7; /* Light hover background */
+        }
+
+        /* STATISTICS TABLE */
+        .stats-table {
+            width: 80%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden; /* Ensures border-radius works on the shadow */
+        }
+        
+        .stats-table th, .stats-table td {
+            padding: 15px;
+            border: 1px solid #D5DBDB;
+        }
+        
+        .stats-table th {
+            background-color: #3498DB; /* Blue header row */
+            color: white;
+            text-transform: uppercase;
+        }
+        
+        .stats-table tr:nth-child(even) {
+            background-color: #F2F4F4; /* Zebra striping */
+        }
+        
+        .stats-table td {
+            text-align: center;
+        }
+        
+        .stats-table td b {
+            color: #2C3E50;
+        }
+
+        .stats-table td font {
+            font-size: 1.8em;
+            color: #E67E22; /* Orange for the numbers */
+            font-weight: bold;
+        }
+
+        /* GET STARTED SECTION (Flexbox replaces table) */
+        .get-started-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 30px 0;
+            border-top: 1px solid #D5DBDB;
+        }
+        
+        @media (max-width: 600px) {
+            .get-started-section {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        .get-started-text {
+            flex: 2;
+            padding-right: 20px;
+        }
+
+        .get-started-text h2 {
+            border: none;
+            color: #1B4F9C;
+            text-align: left;
+        }
+        
+        .get-started-image {
+            flex: 1;
+            text-align: right;
+        }
+        
+        .get-started-image img {
+            width: 100%;
+            max-width: 180px;
+            border-radius: 50%; /* Make the image circular */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s;
+        }
+        
+        /* Hover Image Effect for circular image */
+        .get-started-image img:hover {
+            transform: rotate(5deg) scale(1.1);
+            box-shadow: 0 0 20px 5px #3498DB; /* Blue glow */
+        }
+
+        /* FOOTER AND BACK LINK */
+        .back-link {
+            text-align: center;
+            padding: 20px 0 40px;
+        }
+        
+        .back-link a {
+            background-color: #2ECC71; /* Green Button */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        
+        .back-link a:hover {
+            background-color: #27AE60;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+
+</head>
+<body>
+    
+    <h1>📚 About Our Digital Library</h1>
+    
+    <div class="header-image-container">
+        <img src="header_library_books.jpg" alt="A row of books on a shelf in a library">
+    </div>
+
+    <div class="container">
+        <p class="intro-section">
+            <b>Welcome to our digital Book Library</b> — a simple, clean, and student-friendly platform
+            created to help readers explore knowledge **anytime, anywhere**.
+            Our aim is to make reading easier, enjoyable, and accessible for everyone.
+        </p>
+
+        <center>
+            <h2>Our Mission & Vision</h2>
+        </center>
+
+        <div class="mission-vision-grid">
+            <div class="mission-vision-box mission-box">
+                <h3>Mission Statement</h3>
+                <p>
+                    To provide a vast, diverse, and easily navigable collection of digital literature and
+                    educational resources. We aim to support **academic success** and **lifelong learning** for every user.
+                </p>
+            </div>
+            <div class="mission-vision-box vision-box">
+                <h3>Vision Statement</h3>
+                <p>
+                    To become the leading online resource for students and educators, recognized for our
+                    curated content and commitment to promoting **global literacy** in the digital age.
+                </p>
+            </div>
+        </div>
+
+        <center>
+            <h2>What We Offer</h2>
+        </center>
+
+        <ul class="offer-list">
+            <li><b>Diverse Collection:</b> Access to thousands of titles across many genres, from academic textbooks to classic fiction.</li>
+            <li><b>Author Spotlights:</b> Dedicated sections to learn about your favorite authors and their works.</li>
+            <li><b>24/7 Access:</b> Read any book, any time, on any device.</li>
+            <li><b>Free Resources:</b> A growing collection of public domain and open-access educational materials.</li>
+        </ul>
+
+        <center>
+            <h2>Library Highlights (Statistics)</h2>
+        </center>
+
+        <table class="stats-table">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Count</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>Digital Titles</b></td>
+                    <td><font size="+2">15,000+</font></td>
+                    <td>Total e-books available in our catalog.</td>
+                </tr>
+                <tr>
+                    <td><b>Active Genres</b></td>
+                    <td><font size="+2">50+</font></td>
+                    <td>Categories including Science, History, Fiction, and more.</td>
+                </tr>
+                <tr>
+                    <td><b>Registered Authors</b></td>
+                    <td><font size="+2">500+</font></td>
+                    <td>Writers featured in our diverse collection.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="get-started-section">
+            <div class="get-started-text">
+                <h2>Get Started</h2>
+                <p>
+                    Ready to dive into a world of knowledge? Start browsing our catalog today!
+                </p>
+            </div>
+            <div class="get-started-image">
+                <img src="student_reading.jpg" alt="Student reading on a tablet">
+            </div>
+        </div>
+
+    </div> <div class="back-link">
+        <a href="wd java.html"><b>&#9664; Back to Home</b></a>
+    </div>
+
+</body>
+</html>

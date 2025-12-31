@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Featured Books List</title>
+    
+    <style>
+        /* GLOBAL STYLES */
+        body {
+            /* A warm, soft background color */
+            background-color: #FDFEFE; 
+            font-family: 'Poppins', sans-serif; /* Modern, clean font */
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* HEADER */
+        h1 {
+            color: #8E44AD; /* Rich Purple Title */
+            text-align: center;
+            padding: 30px 0 15px;
+            font-size: 3em;
+            background-color: #ECF0F1; /* Light Gray Header Background */
+            margin: 0;
+            border-bottom: 5px solid #2ECC71; /* Thick Green line */
+        }
+
+        h2 {
+            color: #E67E22; /* Vibrant Orange Section Header */
+            text-align: center;
+            margin: 40px 0 30px;
+            padding: 10px 20px;
+            border: 2px solid #E67E22;
+            border-radius: 5px;
+            display: inline-block;
+            font-size: 2em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background-color: #FEF9E7;
+        }
+        
+        .section-header-container {
+            text-align: center;
+        }
+
+        /* BOOK ENTRIES CONTAINER: Uses CSS Grid for a clean layout */
+        .book-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            width: 85%;
+            max-width: 1200px;
+            margin: 0 auto 50px auto;
+            padding: 20px 0;
+        }
+
+        /* INDIVIDUAL BOOK CARD (Totally different from table rows) */
+        .book-card {
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-top: 8px solid #3498DB; /* Blue accent bar on top */
+        }
+        
+        /* Alternating top accent color for visual variety */
+        .book-card:nth-child(even) {
+            border-top: 8px solid #2ECC71; /* Green accent */
+        }
+
+        /* Hover effect for the entire card */
+        .book-card:hover {
+            transform: translateY(-10px); /* Significant lift */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 4. IMAGES and Hover Effects */
+        .cover-container {
+            margin-bottom: 20px;
+        }
+        
+        .cover-container img {
+            width: 100%;
+            max-width: 150px; /* Uniform width for covers in the grid */
+            height: auto;
+            border-radius: 8px;
+            border: 4px solid #F1C40F; /* Yellow border */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.5s, box-shadow 0.5s;
+        }
+
+        /* Book Cover Hover Effect */
+        .cover-container img:hover {
+            transform: scale(1.1) rotate(5deg); /* Major zoom and tilt */
+            box-shadow: 0 0 25px 5px #F39C12; /* Orange glow */
+            border-color: #E67E22; /* Border color change */
+        }
+
+        /* BOOK DETAILS */
+        .book-details {
+            width: 100%;
+        }
+        
+        .book-details h3 {
+            color: #3498DB; /* Bright Blue Title */
+            margin: 0 0 5px 0;
+            font-size: 1.8em;
+        }
+        
+        .book-meta {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #D5DBDB;
+        }
+        
+        .book-meta p {
+            margin: 0;
+            font-size: 1em;
+        }
+        
+        .book-meta b {
+            color: #8E44AD; /* Purple for Author */
+            font-weight: 700;
+        }
+        
+        .book-meta span {
+            color: #7F8C8D; 
+            font-style: italic;
+            display: block; /* Ensures genre/date are on a new line */
+            font-size: 0.9em;
+        }
+
+        .book-summary p {
+            font-size: 0.95em;
+        }
+        
+        .book-summary p b {
+            /* Highlight key theme */
+            color: #E74C3C; /* Deep Red for key concepts */
+            background-color: #FADBD8; 
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        /* FOOTER LINK */
+        .back-link {
+            text-align: center;
+            margin: 40px 0;
+            padding-bottom: 30px;
+        }
+        
+        .back-link a {
+            background-color: #2ECC71; /* Green Button */
+            color: white;
+            padding: 15px 35px;
+            border-radius: 5px; 
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            display: inline-block;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+        
+        .back-link a:hover {
+            background-color: #27AE60;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+
+</head>
+<body>
+    
+    <h1>📚 Featured Books List</h1>
+
+    <div class="section-header-container">
+        <h2>Our Top Picks</h2>
+    </div>
+
+    <div class="book-grid-container">
+
+        <div class="book-card">
+            <div class="cover-container">
+                <img src="alchemist_cover.jpg" alt="Cover of The Alchemist">
+            </div>
+            
+            <div class="book-details">
+                <h3>The Alchemist</h3>
+                <div class="book-meta">
+                    <p>
+                        <b>Author:</b> Paulo Coelho
+                        <span>Genre: Philosophical Fiction | Published: 1988</span>
+                    </p>
+                </div>
+                <div class="book-summary">
+                    <p>
+                        A shepherd boy named Santiago travels from Spain to the Egyptian desert in search of a hidden treasure. 
+                        This allegorical novel is about realizing one's <b>Personal Legend</b> and the importance of following your heart.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="book-card">
+            <div class="cover-container">
+                <img src="wings_of_fire_cover.jpg" alt="Cover of Wings of Fire">
+            </div>
+            
+            <div class="book-details">
+                <h3>Wings of Fire</h3>
+                <div class="book-meta">
+                    <p>
+                        <b>Author:</b> Dr. A.P.J. Abdul Kalam with Arun Tiwari
+                        <span>Genre: Autobiography, Inspirational | Published: 1999</span>
+                    </p>
+                </div>
+                <div class="book-summary">
+                    <p>
+                        The inspiring autobiography of the former President of India, detailing his early life and work in space research. 
+                        It is a powerful narrative of <b>determination and belief</b>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="book-card">
+            <div class="cover-container">
+                <img src="rich_dad_cover.jpg" alt="Cover of Rich Dad Poor Dad">
+            </div>
+            
+            <div class="book-details">
+                <h3>Rich Dad Poor Dad</h3>
+                <div class="book-meta">
+                    <p>
+                        <b>Author:</b> Robert Kiyosaki
+                        <span>Genre: Personal Finance | Published: 1997</span>
+                    </p>
+                </div>
+                <div class="book-summary">
+                    <p>
+                        A book that advocates the importance of <b>financial literacy</b> and building assets. 
+                        It contrasts the lessons learned from two fathers on wealth creation.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+    </div> <div class="back-link">
+        <a href="wd java.html"><b>&#9664; Back to Home</b></a>
+    </div>
+
+</body>
+</html>

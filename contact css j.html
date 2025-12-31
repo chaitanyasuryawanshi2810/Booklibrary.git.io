@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Our Library</title>
+    
+    <style>
+        /* GLOBAL STYLES */
+        body {
+            /* Dark, sophisticated background */
+            background-color: #34495E; 
+            font-family: 'Verdana', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #EAECEE; /* Light gray text for contrast */
+        }
+
+        /* HEADER */
+        h1 {
+            color: #FFC107; /* Gold/Yellow Title */
+            text-align: center;
+            padding: 30px 0 15px;
+            font-size: 2.8em;
+            background-color: #2C3E50; /* Darker header bar */
+            margin: 0;
+        }
+
+        .intro-text-container {
+            text-align: center;
+            padding: 20px 10%;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            color: #CCD1D9;
+        }
+
+        /* MAIN CONTENT GRID (Replaces outer table) */
+        .main-contact-grid {
+            display: grid;
+            /* Two columns on desktop, stacking on mobile */
+            grid-template-columns: 1fr 1.2fr; 
+            gap: 30px;
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding-bottom: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-contact-grid {
+                grid-template-columns: 1fr; /* Stack columns vertically */
+            }
+        }
+
+        /* COLUMN STYLING */
+        .contact-column {
+            padding: 30px; 
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* LEFT COLUMN (Information) */
+        .info-column {
+            background-color: #2C3E50; /* Dark section */
+        }
+
+        .info-column h2 {
+            color: #3498DB; /* Bright Blue Heading */
+            margin-top: 0;
+            border-bottom: 3px solid #FFC107;
+            padding-bottom: 5px;
+            text-transform: uppercase;
+        }
+        
+        .info-column p {
+            margin: 15px 0;
+        }
+
+        .info-column b {
+            color: #FFC107; /* Gold for labels */
+            display: block;
+            margin-bottom: 4px;
+            font-size: 1.1em;
+        }
+        
+        .info-column span {
+            color: #D5DBDB; /* Lighter text for values */
+        }
+
+        .map-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .map-container img {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.5); /* Gold shadow */
+            transition: transform 0.4s;
+        }
+        
+        .map-container img:hover {
+            transform: scale(1.02);
+        }
+
+        /* RIGHT COLUMN (Form) */
+        .form-column {
+            background-color: #FFFFFF; /* White background for the form area */
+            color: #333; /* Dark text on white background */
+        }
+
+        .form-column h2 {
+            color: #E74C3C; /* Red Heading */
+            margin-top: 0;
+            border-bottom: 3px solid #E74C3C;
+            padding-bottom: 5px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* FORM STYLING */
+        .contact-form-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .contact-form-table label b {
+            color: #34495E; /* Dark blue label text */
+            font-size: 1em;
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .contact-form-table input[type="text"],
+        .contact-form-table input[type="email"],
+        .contact-form-table textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #D5DBDB;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            transition: border-color 0.3s;
+        }
+        
+        .contact-form-table input:focus,
+        .contact-form-table textarea:focus {
+            border-color: #3498DB;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+        
+        .contact-form-table textarea {
+            resize: vertical;
+        }
+
+        .submit-illustration img {
+            margin-bottom: 15px;
+            width: 120px;
+            height: auto;
+        }
+
+        /* SUBMIT BUTTON */
+        .submit-button {
+            background-color: #2ECC71; /* Green Button */
+            color: #FFFFFF;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px; /* Pill shape */
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #27AE60;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* FOOTER LINK */
+        .footer-link {
+            text-align: center;
+            margin: 40px 0;
+            padding-bottom: 30px;
+        }
+        
+        .footer-link a {
+            color: #1ABC9C; /* Green-Teal link color */
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: color 0.3s;
+        }
+        
+        .footer-link a:hover {
+            color: #27AE60;
+        }
+    </style>
+
+</head>
+<body>
+    
+    <header>
+        <h1>📞 Get In Touch With Our Library</h1>
+    </header>
+
+    <div class="intro-text-container">
+        We're here to help! Whether you have questions about our collection, need technical support, or want to provide feedback, please use the methods below.
+    </div>
+
+    <div class="main-contact-grid">
+        
+        <section class="info-column">
+            <h2>Information</h2>
+            
+            <p>
+                <b>Library Address:</b>
+                <span>123 Bookworm Lane, Knowledge City, 500101</span>
+            </p>
+            
+            <p>
+                <b>Phone:</b>
+                <span>(555) 123-4567</span>
+            </p>
+            
+            <p>
+                <b>Email:</b>
+                <span>support@digitallibrary.org</span>
+            </p>
+            
+            <p>
+                <b>Hours of Operation:</b>
+                <span>Monday - Friday: 9:00 AM - 5:00 PM (IST)</span>
+            </p>
+
+            <div class="map-container">
+                <img src="library_contact_map.jpg" alt="Map showing library location">
+            </div>
+            
+        </section>
+
+        <section class="form-column contact-column">
+            
+            <h2>Send Us A Message</h2>
+            
+            <form>
+                <table class="contact-form-table">
+                    <tr>
+                        <td><label><b>Your Name:</b></label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="name" required></td>
+                    </tr>
+                    <tr>
+                        <td><label><b>Email Address:</b></label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="email" name="email" required></td>
+                    </tr>
+                    <tr>
+                        <td><label><b>Subject:</b></label></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="subject"></td>
+                    </tr>
+                    <tr>
+                        <td><label><b>Message:</b></label></td>
+                    </tr>
+                    <tr>
+                        <td><textarea name="message" rows="6" required></textarea></td>
+                    </tr>
+                    <tr>
+                        <td align="center" class="submit-illustration">
+                            <img src="customer_support.jpg" alt="Customer support illustration"><br>
+                            <button type="submit" class="submit-button">
+                                <b>SUBMIT MESSAGE</b>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            
+        </section>
+    </div> <div class="footer-link">
+        <hr>
+        <a href="wd java.html"><b>&#9664; Back to Home</b></a>
+    </div>
+
+</body>
+</html>
